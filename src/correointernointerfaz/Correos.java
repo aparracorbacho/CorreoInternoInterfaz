@@ -13,10 +13,10 @@ import java.util.ArrayList;
  * @author MotherFoquita
  */
 public class Correos {
-     ArrayList<Email> email = new ArrayList<>();
+    public ArrayList<Email> email = new ArrayList<>();
     Utils util = new Utils();
     
-    
+     
     
     //Se listan los correos para el usuario
     public void ver (String nuser){

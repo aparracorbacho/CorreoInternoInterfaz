@@ -113,10 +113,19 @@ public class CorreoInterno extends javax.swing.JFrame {
     private void VCorreosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VCorreosActionPerformed
         // TODO add your handling code here:
         Correos correo = new Correos();
+        Object []object = new Object[2];
         correo.volcarcorreos();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Enviado por");
         modelo.addColumn("Titulo");
+        
+        
+        for (int i = 0;i<correo.email.size();i++){
+            object[i] = (correo.email.get(i).uenvia);
+            object[i+1] = (correo.email.get(i).titulo);
+            modelo.addRow(object);
+        }
+        TCorreos.setModel(modelo);
         
     }//GEN-LAST:event_VCorreosActionPerformed
 
