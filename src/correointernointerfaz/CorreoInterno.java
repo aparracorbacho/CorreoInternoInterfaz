@@ -121,8 +121,8 @@ public class CorreoInterno extends javax.swing.JFrame {
         
         
         for (int i = 0;i<correo.email.size();i++){
-            object[i] = (correo.email.get(i).uenvia);
-            object[i+1] = (correo.email.get(i).titulo);
+            object[0] = (correo.email.get(i).uenvia);
+            object[1] = (correo.email.get(i).titulo);
             modelo.addRow(object);
         }
         TCorreos.setModel(modelo);
