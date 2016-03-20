@@ -5,19 +5,29 @@
  */
 package correointernointerfaz;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author MotherFoquita
  */
 public class CorreoInterno extends javax.swing.JFrame {
+    String usuario = null;
+    public void setusuario(String usuario){
+        this.usuario = usuario;
+    }
+    
     
     /**
      * Creates new form CorreoInterno
      */
     public CorreoInterno() {
         initComponents();
+        CorreoInternoUsuarios correoi = new CorreoInternoUsuarios();
         
     }
     
@@ -56,6 +66,11 @@ public class CorreoInterno extends javax.swing.JFrame {
 
             }
         ));
+        TCorreos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TCorreosMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(TCorreos);
 
         VCorreos.setText("Ver correos");
@@ -113,21 +128,49 @@ public class CorreoInterno extends javax.swing.JFrame {
     private void VCorreosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VCorreosActionPerformed
         // TODO add your handling code here:
         Correos correo = new Correos();
-        Object []object = new Object[2];
+        Object []object = new Object[3];
         correo.volcarcorreos();
+        //Definimos la tabla y el titulo
         DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Id");
         modelo.addColumn("Enviado por");
         modelo.addColumn("Titulo");
-        
-        
+          
+        //Volcamos el contenido de la tabla
+        int idcontador = 1;
         for (int i = 0;i<correo.email.size();i++){
-            object[0] = (correo.email.get(i).uenvia);
-            object[1] = (correo.email.get(i).titulo);
+            if (usuario.equals(correo.email.get(i).ureceptor)){
+            object[0] = idcontador;
+            object[1] = (correo.email.get(i).uenvia);
+            object[2] = (correo.email.get(i).titulo);
             modelo.addRow(object);
+            idcontador++;
+            }             
         }
+        //Cargamos modelo de la tabla para que muestre filas y titulos
         TCorreos.setModel(modelo);
+        //Definimos el tamaño de las columnas
+        TCorreos.getColumnModel().getColumn(0).setMaxWidth(25);
+        TCorreos.getColumnModel().getColumn(1).setMaxWidth(150);
+        TCorreos.getColumnModel().getColumn(1).setMinWidth(150);
         
+        //Definimos que el contenido no sea editable
+            for (int i = 0;i<TCorreos.getColumnCount();i++){
+                //Indicamos que no se puedan redimensionar las columnas
+            TCorreos.getColumnModel().getColumn(i).setResizable(false);
+            }
     }//GEN-LAST:event_VCorreosActionPerformed
+
+    private void TCorreosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TCorreosMousePressed
+        //Aqui el codigo del evento del doble click
+          if (evt.getClickCount() > 1) {
+               JTable target = (JTable)evt.getSource();
+               int row = target.getSelectedRow();
+               String valor = (String) TCorreos.getValueAt(row, 2);
+               JOptionPane.showMessageDialog(null,valor);
+          }
+        
+    }//GEN-LAST:event_TCorreosMousePressed
 
     /**
      * @param args the command line arguments
@@ -156,6 +199,7 @@ public class CorreoInterno extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+    
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

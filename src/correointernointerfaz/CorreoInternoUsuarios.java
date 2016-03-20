@@ -17,8 +17,7 @@ public class CorreoInternoUsuarios extends javax.swing.JFrame {
      * Creates new form CorreoInternoUsuarios
      */
     
-    
-    public CorreoInternoUsuarios() {
+   public CorreoInternoUsuarios() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -110,8 +109,8 @@ public class CorreoInternoUsuarios extends javax.swing.JFrame {
         autenticado = user.compruebaform(usuario,password);
         if (autenticado == 1) {  
             correo.setLocationRelativeTo(null);
+            correo.setusuario(usuario);
             correo.setVisible(true);
-            correo.setName(usuario);
             this.setVisible(false); 
         } else { JOptionPane.showMessageDialog( null, "Las credenciales no son validas", "Error", JOptionPane.ERROR_MESSAGE);}
     }//GEN-LAST:event_loguearActionPerformed
