@@ -16,6 +16,8 @@ import javax.swing.table.TableColumnModel;
  * @author MotherFoquita
  */
 public class CorreoInterno extends javax.swing.JFrame {
+    Correos correo = new Correos();
+    Object []object = new Object[3];
     String usuario = null;
     public void setusuario(String usuario){
         this.usuario = usuario;
@@ -127,8 +129,6 @@ public class CorreoInterno extends javax.swing.JFrame {
 
     private void VCorreosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VCorreosActionPerformed
         // TODO add your handling code here:
-        Correos correo = new Correos();
-        Object []object = new Object[3];
         correo.volcarcorreos();
         //Definimos la tabla y el titulo
         DefaultTableModel modelo = new DefaultTableModel();
@@ -164,10 +164,28 @@ public class CorreoInterno extends javax.swing.JFrame {
     private void TCorreosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TCorreosMousePressed
         //Aqui el codigo del evento del doble click
           if (evt.getClickCount() > 1) {
+          String uenviacorreo = null, titulocorreo = null, contenidocorreo = null;
+              //Recogemos el valor ID de donde emos echo doble click
                JTable target = (JTable)evt.getSource();
                int row = target.getSelectedRow();
-               String valor = (String) TCorreos.getValueAt(row, 2);
-               JOptionPane.showMessageDialog(null,valor);
+               int valor = (int) TCorreos.getValueAt(row, 0);
+               //Cogemos todos los datos de ese correo
+                     int correoid = 1;
+                     for (int i = 0;i<correo.email.size();i++){
+                     if (usuario.equals(correo.email.get(i).ureceptor)){
+                     if (correoid == valor){ 
+                     uenviacorreo = (correo.email.get(i).uenvia);
+                     titulocorreo = (correo.email.get(i).titulo);
+                     contenidocorreo = (correo.email.get(i).contenido);    
+                     }
+                     correoid++;
+                     }             
+                     }
+        //Introducimos los datos de ese correo en una nueva ventana para visualizarlos
+               VerCorreo vercorreo = new VerCorreo();
+               vercorreo.setValores(uenviacorreo,titulocorreo,contenidocorreo);
+               vercorreo.setVisible(true);
+               vercorreo.colocar();
           }
         
     }//GEN-LAST:event_TCorreosMousePressed
