@@ -111,7 +111,7 @@ public class CorreoInternoUsuarios extends javax.swing.JFrame {
             correo.setLocationRelativeTo(null);
             correo.setusuario(usuario);
             correo.setVisible(true);
-            this.setVisible(false); 
+            this.dispose(); 
         } else { JOptionPane.showMessageDialog( null, "Las credenciales no son validas", "Error", JOptionPane.ERROR_MESSAGE);}
     }//GEN-LAST:event_loguearActionPerformed
 

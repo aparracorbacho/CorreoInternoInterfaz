@@ -11,9 +11,9 @@ package correointernointerfaz;
  */
 public class Email {
      String ureceptor,uenvia,titulo,contenido;
-     int id;
-    Email (int id,String ureceptor, String uenvia, String titulo, String contenido){
-        this.id=id;
+     
+    Email (String ureceptor, String uenvia, String titulo, String contenido){
+        
         this.ureceptor=ureceptor;
         this.uenvia=uenvia;
         this.titulo=titulo;

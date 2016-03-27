@@ -19,10 +19,14 @@ public class CorreoInterno extends javax.swing.JFrame {
     Correos correo = new Correos();
     Object []object = new Object[3];
     String usuario = null;
+    
     public void setusuario(String usuario){
         this.usuario = usuario;
     }
-    
+    public void grabarcorreo(String ureceptor, String uenvia, String titulo, String contenido){
+        correo.agregar(ureceptor, uenvia, titulo, contenido);
+                
+    }
     
     /**
      * Creates new form CorreoInterno
@@ -183,7 +187,7 @@ public class CorreoInterno extends javax.swing.JFrame {
                      }
         //Introducimos los datos de ese correo en una nueva ventana para visualizarlos
                VerCorreo vercorreo = new VerCorreo();
-               vercorreo.setValores(uenviacorreo,titulocorreo,contenidocorreo);
+               vercorreo.setValores(usuario,uenviacorreo,titulocorreo,contenidocorreo);
                vercorreo.setVisible(true);
                vercorreo.colocar();
           }

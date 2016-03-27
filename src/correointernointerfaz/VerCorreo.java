@@ -15,13 +15,15 @@ import javax.swing.JOptionPane;
  */
 public class VerCorreo extends javax.swing.JFrame {
     String uenviacorreo, titulocorreo, contenidocorreo;
+    String usuario;
     /**
      * Creates new form VerCorreo
      */
-    public void setValores(String uenvia, String titulo, String contenido){
+    public void setValores(String usuario, String uenvia, String titulo, String contenido){
         this.uenviacorreo = uenvia;
         this.titulocorreo = titulo;
         this.contenidocorreo = contenido;
+        this.usuario = usuario;
     }
    
     public VerCorreo() {
@@ -52,6 +54,7 @@ public class VerCorreo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         exportar = new javax.swing.JButton();
         volver = new javax.swing.JButton();
+        responder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Correo interno - Leer correo");
@@ -81,18 +84,32 @@ public class VerCorreo extends javax.swing.JFrame {
             }
         });
 
+        responder.setText("Responder");
+        responder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                responderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(contenido)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(contenido))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(enviadopor)
-                            .addComponent(jLabel1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(responder))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(enviadopor)
+                                    .addComponent(jLabel1))))
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titulo)
@@ -119,7 +136,8 @@ public class VerCorreo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exportar)
-                    .addComponent(volver))
+                    .addComponent(volver)
+                    .addComponent(responder))
                 .addContainerGap())
         );
 
@@ -159,6 +177,17 @@ public class VerCorreo extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void responderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_responderActionPerformed
+        // TODO add your handling code here:
+        //Codigo para responder al correo
+        Escribir escribir = new Escribir();
+        titulocorreo = "RE: " + titulocorreo ;
+        contenidocorreo = "Respuesta a:\n -----------------------------------\n" + contenidocorreo + "\n-----------------------------------";
+        escribir.setVisible(true);
+        escribir.responder(usuario,uenviacorreo,titulocorreo,contenidocorreo);
+        this.dispose();
+    }//GEN-LAST:event_responderActionPerformed
    
      
     
@@ -203,6 +232,7 @@ public class VerCorreo extends javax.swing.JFrame {
     private javax.swing.JLabel enviadopor;
     private javax.swing.JButton exportar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton responder;
     private javax.swing.JLabel titulo;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
