@@ -147,13 +147,13 @@ public class Escribir extends javax.swing.JFrame {
 
     private void enviarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarCorreoActionPerformed
         // TODO add your handling code here:
-        CorreoInterno correo = new CorreoInterno();
+        CorreoInterno envcorreo = new CorreoInterno();
         try
         {   
             String envpara = paraField.getText();
             String envtitulo = tituloField.getText();
             String envcontenido = contenidoField.getText();
-        correo.grabarcorreo(envpara, usuario, envtitulo, envcontenido);
+        envcorreo.grabarcorreo(envpara, usuario, envtitulo, envcontenido);
         JOptionPane.showMessageDialog(null, "Correo enviado correctamente" , "Enviado!",JOptionPane.INFORMATION_MESSAGE);
         dispose();
         } catch (Exception e) {
@@ -192,7 +192,7 @@ public class Escribir extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Escribir().setVisible(true);
+                
             }
         });
     }

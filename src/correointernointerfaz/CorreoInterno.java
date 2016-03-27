@@ -26,11 +26,18 @@ public class CorreoInterno extends javax.swing.JFrame {
     public void setusuario(String usuario){
         this.usuario = usuario;
     }
+    
     public void grabarcorreo(String ureceptor, String uenvia, String titulo, String contenido){
-        correo.agregar(ureceptor, uenvia, titulo, contenido);
-            
+        correo.agregar(ureceptor, uenvia, titulo, contenido); 
     }
     
+    public void volcar(){
+        correo.agregar("Aaron","Nuria","Proyecto correo 1","Correo enviado de Nuria para Aaron. Primer correo del proyecto");
+        correo.agregar("Aaron","Nuria","Proyecto correo 2","Correo enviado de Nuria para Aaron. Segundo correo del proyecto");
+        correo.agregar("Nuria","Aaron","Proyecto correo 3","Correo enviado de Aaron para Nuria. Tercer correo del proyecto");
+        correo.agregar("Nuria","Aaron","Proyecto correo 4","Correo enviado de Aaron para Nuria. Cuarto correo del proyecto");
+        correo.agregar("Nuria","Aaron","Proyecto correo 5","Correo enviado de Aaron para Nuria. Quinto correo del proyecto");
+    }
     public void cargar(){
         //Definimos la tabla y el titulo
           
@@ -69,10 +76,9 @@ public class CorreoInterno extends javax.swing.JFrame {
      */
     public CorreoInterno() {
         initComponents();
-        CorreoInternoUsuarios correoi = new CorreoInternoUsuarios();
+       
         //Lo primero que hacemos al llegar a esta pantalla es cargar los correos
-        correo.volcarcorreos();
-        
+            
                
     }
     
@@ -201,6 +207,7 @@ public class CorreoInterno extends javax.swing.JFrame {
         //Codigo para actualizar la lista de correos
         
         //for (int i=0;i<TCorreos.getRowCount();i++){
+            
             modelo.setColumnCount(0);
             modelo.setRowCount(0);
             cargar();
