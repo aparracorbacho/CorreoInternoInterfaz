@@ -1,0 +1,12 @@
+Titulo: Proyecto correo 1
+Enviado por: Nuria
+Contenido:
+Correo enviado de Nuria para Aaron. Primer correo del proyecto
+
+
+Titulo: Proyecto correo 2
+Enviado por: Nuria
+Contenido:
+Correo enviado de Nuria para Aaron. Segundo correo del proyecto
+
+

@@ -22,6 +22,7 @@ public class Escribir extends javax.swing.JFrame {
     }
     public void escribir(String usuario){
         this.usuario = usuario;
+        enviadopor.setText(usuario);
     }
     public void responder(String usuario, String para, String titulo, String contenido){
         paraField.setText(para);
@@ -149,7 +150,10 @@ public class Escribir extends javax.swing.JFrame {
         CorreoInterno correo = new CorreoInterno();
         try
         {   
-        correo.grabarcorreo(paraField.getText(), usuario, tituloField.getText(), contenidoField.getText());
+            String envpara = paraField.getText();
+            String envtitulo = tituloField.getText();
+            String envcontenido = contenidoField.getText();
+        correo.grabarcorreo(envpara, usuario, envtitulo, envcontenido);
         JOptionPane.showMessageDialog(null, "Correo enviado correctamente" , "Enviado!",JOptionPane.INFORMATION_MESSAGE);
         dispose();
         } catch (Exception e) {

@@ -5,6 +5,8 @@
  */
 package correointernointerfaz;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -19,13 +21,47 @@ public class CorreoInterno extends javax.swing.JFrame {
     Correos correo = new Correos();
     Object []object = new Object[3];
     String usuario = null;
+    DefaultTableModel modelo = new DefaultTableModel();
     
     public void setusuario(String usuario){
         this.usuario = usuario;
     }
     public void grabarcorreo(String ureceptor, String uenvia, String titulo, String contenido){
         correo.agregar(ureceptor, uenvia, titulo, contenido);
-                
+            
+    }
+    
+    public void cargar(){
+        //Definimos la tabla y el titulo
+          
+        modelo.addColumn("Id");
+        modelo.addColumn("Enviado por");
+        modelo.addColumn("Titulo");
+        
+            
+        //Volcamos el contenido de la tabla
+        int idcontador = 1;
+        for (int i = 0;i<correo.email.size();i++){
+            if (usuario.equals(correo.email.get(i).ureceptor)){
+            object[0] = idcontador;
+            object[1] = (correo.email.get(i).uenvia);
+            object[2] = (correo.email.get(i).titulo);
+            modelo.addRow(object);
+            idcontador++;
+            }             
+        }
+        //Cargamos modelo de la tabla para que muestre filas y titulos
+        TCorreos.setModel(modelo);
+        //Definimos el tamaño de las columnas
+        TCorreos.getColumnModel().getColumn(0).setMaxWidth(25);
+        TCorreos.getColumnModel().getColumn(1).setMaxWidth(150);
+        TCorreos.getColumnModel().getColumn(1).setMinWidth(150);
+        
+        //Definimos que el contenido no sea editable
+            for (int i = 0;i<TCorreos.getColumnCount();i++){
+                //Indicamos que no se puedan redimensionar las columnas
+            TCorreos.getColumnModel().getColumn(i).setResizable(false);
+            }
     }
     
     /**
@@ -34,7 +70,10 @@ public class CorreoInterno extends javax.swing.JFrame {
     public CorreoInterno() {
         initComponents();
         CorreoInternoUsuarios correoi = new CorreoInternoUsuarios();
+        //Lo primero que hacemos al llegar a esta pantalla es cargar los correos
+        correo.volcarcorreos();
         
+               
     }
     
     /**
@@ -50,7 +89,9 @@ public class CorreoInterno extends javax.swing.JFrame {
         SalirCorreo = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TCorreos = new javax.swing.JTable();
-        VCorreos = new javax.swing.JButton();
+        actualizar = new javax.swing.JButton();
+        escribirCorreo = new javax.swing.JButton();
+        exportarTodo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Correo Interno");
@@ -79,10 +120,24 @@ public class CorreoInterno extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(TCorreos);
 
-        VCorreos.setText("Ver correos");
-        VCorreos.addActionListener(new java.awt.event.ActionListener() {
+        actualizar.setText("Actualizar");
+        actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VCorreosActionPerformed(evt);
+                actualizarActionPerformed(evt);
+            }
+        });
+
+        escribirCorreo.setText("Escribir correo");
+        escribirCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                escribirCorreoActionPerformed(evt);
+            }
+        });
+
+        exportarTodo.setText("Exportar todos los correos");
+        exportarTodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportarTodoActionPerformed(evt);
             }
         });
 
@@ -97,13 +152,19 @@ public class CorreoInterno extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(VCorreos))
-                    .addComponent(jLabel1))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(escribirCorreo)
+                                .addGap(97, 97, 97)
+                                .addComponent(exportarTodo))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(actualizar)))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,12 +175,16 @@ public class CorreoInterno extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(escribirCorreo)
+                            .addComponent(exportarTodo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                         .addComponent(SalirCorreo)
                         .addGap(25, 25, 25))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(VCorreos)
+                        .addComponent(actualizar)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -131,39 +196,17 @@ public class CorreoInterno extends javax.swing.JFrame {
          System.exit(0);
     }//GEN-LAST:event_SalirCorreoActionPerformed
 
-    private void VCorreosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VCorreosActionPerformed
+    private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
         // TODO add your handling code here:
-        correo.volcarcorreos();
-        //Definimos la tabla y el titulo
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Id");
-        modelo.addColumn("Enviado por");
-        modelo.addColumn("Titulo");
-          
-        //Volcamos el contenido de la tabla
-        int idcontador = 1;
-        for (int i = 0;i<correo.email.size();i++){
-            if (usuario.equals(correo.email.get(i).ureceptor)){
-            object[0] = idcontador;
-            object[1] = (correo.email.get(i).uenvia);
-            object[2] = (correo.email.get(i).titulo);
-            modelo.addRow(object);
-            idcontador++;
-            }             
-        }
-        //Cargamos modelo de la tabla para que muestre filas y titulos
-        TCorreos.setModel(modelo);
-        //Definimos el tamaño de las columnas
-        TCorreos.getColumnModel().getColumn(0).setMaxWidth(25);
-        TCorreos.getColumnModel().getColumn(1).setMaxWidth(150);
-        TCorreos.getColumnModel().getColumn(1).setMinWidth(150);
+        //Codigo para actualizar la lista de correos
         
-        //Definimos que el contenido no sea editable
-            for (int i = 0;i<TCorreos.getColumnCount();i++){
-                //Indicamos que no se puedan redimensionar las columnas
-            TCorreos.getColumnModel().getColumn(i).setResizable(false);
-            }
-    }//GEN-LAST:event_VCorreosActionPerformed
+        //for (int i=0;i<TCorreos.getRowCount();i++){
+            modelo.setColumnCount(0);
+            modelo.setRowCount(0);
+            cargar();
+        //}
+     
+    }//GEN-LAST:event_actualizarActionPerformed
 
     private void TCorreosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TCorreosMousePressed
         //Aqui el codigo del evento del doble click
@@ -193,6 +236,47 @@ public class CorreoInterno extends javax.swing.JFrame {
           }
         
     }//GEN-LAST:event_TCorreosMousePressed
+
+    private void escribirCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escribirCorreoActionPerformed
+        // TODO add your handling code here:
+        Escribir escribir = new Escribir();
+        escribir.escribir(usuario);
+        escribir.setVisible(true);
+    }//GEN-LAST:event_escribirCorreoActionPerformed
+
+    private void exportarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarTodoActionPerformed
+        // TODO add your handling code here:
+        // Exportamos todos los correos
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+        String correoexportado = "src/correointernointerfaz/exportado/Correos.txt";
+        fichero = new FileWriter(correoexportado);
+        String fileLocal = new String(correoexportado);
+        for (int i = 0;i<correo.email.size();i++){
+            if (usuario.equals(correo.email.get(i).ureceptor)){
+               pw = new PrintWriter(fichero);
+               pw.println("Titulo: " + correo.email.get(i).titulo);
+               pw.println("Enviado por: " + correo.email.get(i).uenvia);
+               pw.println("Contenido:\n" + correo.email.get(i).contenido);
+               pw.println("\n");
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Fichero exportado correctamente, acepta para abrir" , "Exportacion correcta",JOptionPane.PLAIN_MESSAGE);
+        Runtime.getRuntime().exec("cmd /c start "+fileLocal);
+        }catch (Exception e) {
+           JOptionPane.showMessageDialog(null, e.getMessage() , "Error" ,JOptionPane.ERROR_MESSAGE);
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              JOptionPane.showMessageDialog(null, e2.getMessage() , "Error",JOptionPane.ERROR_MESSAGE);
+           }
+        }
+        
+        
+    }//GEN-LAST:event_exportarTodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,7 +317,9 @@ public class CorreoInterno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SalirCorreo;
     private javax.swing.JTable TCorreos;
-    private javax.swing.JButton VCorreos;
+    private javax.swing.JButton actualizar;
+    private javax.swing.JButton escribirCorreo;
+    private javax.swing.JButton exportarTodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
